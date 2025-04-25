@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Command Classifier</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .search-container {
+            margin: 20px 0;
+        }
+        #commandInput {
+            padding: 10px;
+            width: 70%;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: none;
+        }
+        .benign {
+            color: green;
+        }
+        .suspicious {
+            color: orange;
+        }
+        .malicious {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Command Classification System</h1>
+    
+    <div class="search-container">
+        <input type="text" id="commandInput" placeholder="Enter a command to classify...">
+        <button onclick="classifyCommand()">Classify</button>
+    </div>
+    
+    <div id="result">
+        <h3>Classification Result:</h3>
+        <p><strong>Command:</strong> <span id="command"></span></p>
+        <p><strong>Classification:</strong> <span id="prediction"></span></p>
+        <p><strong>Confidence Score:</strong> <span id="score"></span></p>
+    </div>
+
+    <script>
+        function classifyCommand() {
+            const command = document.getElementById('commandInput').value;
+            if (!command) {
+                alert('Please enter a command');
+                return;
+            }
+
+            // Create form data
+            const formData = new FormData();
+            formData.append('command', command);
+
+            // Send request to server
+            fetch('/classify', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display result
+                document.getElementById('command').textContent = data.command;
+                
+                const predictionElement = document.getElementById('prediction');
+                predictionElement.textContent = data.prediction;
+                predictionElement.className = data.prediction.toLowerCase();
+                
+                document.getElementById('score').textContent = data.score;
+                document.getElementById('result').style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        }
+    </script>
+</body>
+</html>
