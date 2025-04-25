@@ -23,6 +23,6 @@ Tokenization: Breaks down commands into individual components
 Feature Extraction: Identifies key characteristics of commands that may indicate malicious intent
 Semantic Analysis: Understands the purpose and potential impact of commands
 Pattern Recognition: Compares commands against known malicious patterns
-Classification: Uses a trained model to categorize commands based on their potential risk
+Classification: Uses a trained model to categorise commands based on their potential risk
 
 
