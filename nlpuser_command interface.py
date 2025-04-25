@@ -7,10 +7,8 @@ from flask import Flask, render_template, request, jsonify
 current_dir = os.path.dirname(os.path.abspath(__file__))
 template_dir = os.path.join(current_dir, 'web')
 
-# Create Flask app with custom template folder
 app = Flask(__name__, template_folder=template_dir)
 
-# Load the zero-shot classifier
 classifier = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
 
 # Define labels
@@ -49,7 +47,7 @@ def classify_command():
 
 if __name__ == '__main__':
     # Use the exact path from your working code
-    csv_path = r"C:\Users\sriso\Downloads\commands.csv"
+    csv_path = r"<path>"
     
     try:
         commands = load_commands_db(csv_path)
